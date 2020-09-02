@@ -19,10 +19,10 @@ Follow the steps [on this site](https://docs.telerik.com/teststudio/features/tes
 **Current existing commands:**
 
 ```
-sk - Go in the playground of Skript
-sk help - Show an help message about cli
-sk run <script path> - Run a script
-sk update - Update the CLI with latest available version. Fail if the OS is not supported.
+skript - Go in the playground of Skript
+skript help - Show an help message about cli
+skript run <script path> - Run a script
+skript update - Update the CLI with latest available version. Fail if the OS is not supported.
 ```
 
 More commands can come later. Don't hesitate to suggest us some commands by [creating an issue](https://github.com/SkriptLang/skript-cli/issues)
