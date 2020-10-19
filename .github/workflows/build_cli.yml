@@ -111,13 +111,13 @@ jobs:
           native-image -jar skript-cli.jar --no-fallback --no-server -H:Class=com.olyno.skriptcli.CLI -H:Name=build/skript-cli/skript-cli.exe
       
       - name: Check build
-      run: |
-        ls
-        cd build
-        ls
-        cd skript-cli
-        ls
-        cd ../../
+        run: |
+          ls
+          cd build
+          ls
+          cd skript-cli
+          ls
+          cd ../../
         
       - name: Publish artifact
         uses: actions/upload-artifact@master
