@@ -5,6 +5,7 @@ on: [push]
 jobs:
 
   build-jar:
+    name: Build default jar
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -59,13 +60,13 @@ jobs:
         with:
           name: skript-cli.jar
       
-      - name: Setup Toolchain dependencies
+      - name: Setup Toolchain dependencies for MacOS
         if: startsWith(matrix.os, 'macos')
         run: xcode-select --install
 
-      - name: Setup Toolchain dependencies
+      - name: Setup Toolchain dependencies for Ubuntu
         if: startsWith(matrix.os, 'ubuntu')
-        run: sudo apt-get install build-essential libz-dev zlib1
+        run: sudo apt-get install build-essential libz-dev zlib1g-dev
 
       - name: Build CLI for ${{ matrix.os }}
         run: native-image -jar skript-cli.jar --no-fallback --no-server -H:Class=com.olyno.skriptcli.CLI -H:Name=build/skript-cli/skript-cli
@@ -111,7 +112,7 @@ jobs:
         with:
           name: skript-cli.jar
 
-      - name: Setup Toolchain dependencies
+      - name: Setup Toolchain dependencies for Windows
         run: choco install visualstudio2017-workload-vctools
 
       - name: Build CLI for windows-latest
