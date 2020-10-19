@@ -1,49 +1,22 @@
 name: Build CLI
 
-on:
-  push:
-    branches:
-      - master
+on: [push]
 
 jobs:
 
-  build-ubuntu-mac:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-
+  build-jar:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
-          submodule: true
+          submodules: true
       
-      - name: Set up JDK 1.11
-        uses: actions/setup-java@v1
+      - name: Setup GraalVM
+        uses: ayltai/setup-graalvm@v1
         with:
           java-version: 11
-
-      - name: Build with Gradle
-        run: gradle nativeImage
-
-      - name: Publish artifact
-        uses: actions/upload-artifact@master
-        with:
-          name: skript-${{ matrix.os }}
-          path: build/graal/skript
-
-  build-windows:
-    runs-on: windows-latest
-
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodule: true
-
-      - name: Set up JDK 1.11
-        uses: actions/setup-java@v1
-        with:
-          java-version: 11
+          graalvm-version: 20.1.0
+          native-image: true
 
       - name: Cache Gradle packages
         uses: actions/cache@v2
@@ -52,18 +25,102 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
 
+      - name: Build CLI JAR
+        run: gradle build
+
+      - name: Upload JAR
+        uses: actions/upload-artifact@v2
+        with:
+          name: skript-cli.jar
+          path: build/libs/*.jar
+
+  build-ubuntu-mac:
+    needs: [build-jar]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      
+      - name: Setup GraalVM
+        uses: ayltai/setup-graalvm@v1
+        with:
+          java-version: 11
+          graalvm-version: 20.1.0
+          native-image: true
+
+      - name: Get JAR Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: skript-cli.jar
+
+      - name: Build CLI for ${{ matrix.os }}
+        run: native-image -jar skript-cli.jar --no-fallback --no-server -H:Class=com.olyno.skriptcli.CLI -H:Name=build/skript-cli/skript-cli
+        
+      - name: Check build
+        run: |
+          ls
+          cd build
+          ls
+          cd skript-cli
+          ls
+          cd ../../
+
+      - name: Make native secure
+        if: startsWith(matrix.os, 'macos')
+        run: xattr -d com.apple.quarantine build/skript-cli/skript-cli
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: skript-${{ matrix.os }}
+          path: build/skript-cli/skript-cli
+
+  build-windows:
+    needs: [build-jar]
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Setup GraalVM
+        uses: ayltai/setup-graalvm@v1
+        with:
+          java-version: 11
+          graalvm-version: 20.1.0
+          native-image: true
+
+      - name: Get JAR Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: skript-cli.jar
+
       - name: Set up Visual C Build Tools Workload for Visual Studio 2017 Build Tools
         run: choco install visualstudio2017-workload-vctools
 
-      - name: set env variables and run the Gradle build
+      - name: Build CLI for windows-latest
         shell: cmd
-        run: call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
-     
-      - name: Build with Gradle
-        run: gradle nativeImage
-
+        run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
+          native-image -jar skript-cli.jar --no-fallback --no-server -H:Class=com.olyno.skriptcli.CLI -H:Name=build/skript-cli/skript-cli.exe
+      
+      - name: Check build
+      run: |
+        ls
+        cd build
+        ls
+        cd skript-cli
+        ls
+        cd ../../
+        
       - name: Publish artifact
         uses: actions/upload-artifact@master
         with:
-          name: skript-windows-latest
-          path: build/graal/skript.exe
+          name: skript-windows-latest.exe
+          path: build/skript-cli/*.exe
