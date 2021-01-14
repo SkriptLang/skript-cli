@@ -12,20 +12,20 @@ Open your terminal and run
 
 ```shell
 $ cd path/to/the/downloaded/cli/file
-$ sudo [ -d "/etc/profile.d/" ] && echo "alias skript='. $PWD/binairies/skript.sh'" | sudo tee -a /etc/profile.d/skript-aliases.sh || echo "Can't create Skript's alias: directory /etc/profile.d/ seems to not exist"
+$ sudo [ -d "/etc/profile.d/" ] && echo "alias skript='. $PWD/binaries/skript.sh'" | sudo tee -a /etc/profile.d/skript-aliases.sh || echo "Can't create Skript's alias: directory /etc/profile.d/ seems to not exist"
 ```
 
 In one line:
 
 ```shell
-$ sudo sh -c 'cd path/to/the/downloaded/cli/file' && [ -d "/etc/profile.d/" ] && echo "alias skript='. $PWD/binairies/skript.sh'" | sudo tee -a /etc/profile.d/skript-aliases.sh || echo "Can't create Skript's alias: directory /etc/profile.d/ seems to not exist"
+$ sudo sh -c 'cd path/to/the/downloaded/cli/file' && [ -d "/etc/profile.d/" ] && echo "alias skript='. $PWD/binaries/skript.sh'" | sudo tee -a /etc/profile.d/skript-aliases.sh || echo "Can't create Skript's alias: directory /etc/profile.d/ seems to not exist"
 ```
 
 *This command simply go to the downloaded project and add a terminal alias (requires ``sudo`` user)*
 
 ### Windows: 
 
-Follow the steps [on this site](https://docs.telerik.com/teststudio/features/test-runners/add-path-environment-variables) to add the ``./binairies`` folder from the downloaded project to make it executable.
+Follow the steps [on this site](https://docs.telerik.com/teststudio/features/test-runners/add-path-environment-variables) to add the ``./binaries`` folder from the downloaded project to make it executable.
 
 ## Usage
 
@@ -51,7 +51,7 @@ git submodule update --init --recursive --remote
 
 To build the project to simple jar files, you have simply to run ``gradle build``. All compiled files will be available in the directory ``build/libs`` at the root of the project.
 
-To execute the compiled version, use ``./binairies/skript.bat your command`` on Windows, and ``./binairies/skript.sh your command`` on Linux or Mac
+To execute the compiled version, use ``./binaries/skript.bat your command`` on Windows, and ``./binaries/skript.sh your command`` on Linux or Mac
 
 ## License
 
