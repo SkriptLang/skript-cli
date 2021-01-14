@@ -42,7 +42,8 @@ public abstract class Command {
     }
 
     public void log() {
-        logger.logOutput();
+        // TODO Fix logs here
+        // logger.logOutput();
         List<LogEntry> logs = logger.close();
         Calendar time = Calendar.getInstance();
         if (!logs.isEmpty()) {

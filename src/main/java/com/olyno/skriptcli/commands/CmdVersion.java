@@ -9,22 +9,18 @@ import com.olyno.skriptcli.utils.Flags;
 
 import io.github.syst3ms.skriptparser.util.ConsoleColors;
 
-public class CmdHelp extends Command {
+public class CmdVersion extends Command {
 
-    public CmdHelp() {
-        this.setDescription("Show an help message about cli");
-        this.setUsage("help");
-        this.setPattern("help");
+    public CmdVersion() {
+        this.setDescription("Show athe current version of the cli");
+        this.setUsage("version");
+        this.setPattern("version");
         this.setSince("0.1.0");
     }
 
     @Override
     public void execute(ArrayList<String> args, HashMap<Flags, Boolean> flags) {
         System.out.println(ConsoleColors.PURPLE + "\nSkript CLI - v" + CLI.VERSION + "\n");
-        System.out.println("Usage: ");
-        for (Command command : CLI.COMMANDS) {
-            System.out.println("\t" + ConsoleColors.BLUE + "skript " + command.getUsage() + ConsoleColors.RESET + " - " + command.getDescription() + " (" + command.getSince() + ")");
-        }
     }
 
 }

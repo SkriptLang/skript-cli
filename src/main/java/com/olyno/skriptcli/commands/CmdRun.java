@@ -31,7 +31,7 @@ public class CmdRun extends Command {
         Path scriptPath = Paths.get(scriptName + ".sk");
         if (Files.isRegularFile(scriptPath)) {
             Parser.init(new String[0], new String[0], new String[0], true);
-            Parser.run(scriptPath.toString(), debug);
+            Parser.run(scriptPath.toString(), debug, true);
         } else if (Files.isDirectory(scriptPath)) {
             this.fail("You can't compile a directory!");
         } else {

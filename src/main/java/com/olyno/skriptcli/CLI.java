@@ -10,11 +10,13 @@ import com.olyno.skriptcli.commands.CmdHelp;
 import com.olyno.skriptcli.commands.CmdPlayground;
 import com.olyno.skriptcli.commands.CmdRun;
 import com.olyno.skriptcli.commands.CmdUpdate;
+import com.olyno.skriptcli.commands.CmdVersion;
 import com.olyno.skriptcli.utils.Command;
 import com.olyno.skriptcli.utils.Flags;
-import com.olyno.skriptcli.utils.Utils;
 
 public class CLI extends Command {
+
+    public final static String VERSION = "0.1.0";
 
     public static List<Command> COMMANDS = new ArrayList<>();
     public static Command HELP_COMMAND;
@@ -35,6 +37,7 @@ public class CLI extends Command {
         HELP_COMMAND = new CmdHelp();
         COMMANDS.add(new CmdPlayground());
         COMMANDS.add(HELP_COMMAND);
+        COMMANDS.add(new CmdVersion());
         COMMANDS.add(new CmdRun());
         COMMANDS.add(new CmdUpdate());
         for (Flags flag : Flags.values()) {
@@ -71,7 +74,7 @@ public class CLI extends Command {
             }
         }
         if (!commandFound) {
-            this.fail("Command not found. Have a look in all commands using '" + Utils.getExecutableName() + " help'");
+            this.fail("Command not found. Have a look in all commands using 'skript help'");
         }
         cli.log();
     }
