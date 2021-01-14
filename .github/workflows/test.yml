@@ -26,7 +26,7 @@ jobs:
         run: gradle build
 
       - name: Test
-        run: ./binairies/skript.sh version
+        run: sudo ./binairies/skript.sh version
 
   test-windows:
     runs-on: windows-latest
