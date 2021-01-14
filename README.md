@@ -4,7 +4,9 @@
 
 ## Install
 
-**Ubuntu (and I guess MacOS)**
+**WARNING:** You need Java installed on your computer to make this work. Without it, nothing will work!
+
+### Ubuntu (and I guess MacOS)
 
 Open your terminal and run
 
@@ -21,13 +23,13 @@ $ sudo sh -c 'cd path/to/the/downloaded/cli/file' && [ -d "/etc/profile.d/" ] &&
 
 *This command simply go to the downloaded project and add a terminal alias (requires ``sudo`` user)*
 
-**Windows:**
+### Windows: 
 
 Follow the steps [on this site](https://docs.telerik.com/teststudio/features/test-runners/add-path-environment-variables) to add the ``./binairies`` folder from the downloaded project to make it executable.
 
 ## Usage
 
-**Current existing commands:**
+### Current existing commands:
 
 ```
 skript - Go in the playground of Skript
