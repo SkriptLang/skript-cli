@@ -6,11 +6,13 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.olyno.skriptcli.CLI;
 import com.olyno.skriptcli.Playground;
 import com.olyno.skriptcli.utils.Command;
 import com.olyno.skriptcli.utils.Flags;
 
 import io.github.syst3ms.skriptparser.parsing.SyntaxParser;
+import io.github.syst3ms.skriptparser.util.ConsoleColors;
 
 public class CmdPlayground extends Command {
 
@@ -26,10 +28,15 @@ public class CmdPlayground extends Command {
 
     @Override
     public void execute(ArrayList<String> args, HashMap<Flags, Boolean> flags) {
+        Boolean checkVersion = flags.get(Flags.VERSION);
+        if (checkVersion) {
+            System.out.println(ConsoleColors.PURPLE + "\nSkript CLI - v" + CLI.VERSION + "\n");
+            return;
+        }
         playground = new Playground(flags);
         Scanner scanner = new Scanner(System.in);
         this.info("Entered in the Skript playground");
-        // ! Fix logs here
+        // TODO Fix logs here
         // this.log();
         while (running.get()) {
             try {
@@ -41,6 +48,7 @@ public class CmdPlayground extends Command {
                 System.out.println("");
             }
         }
+        scanner.close();
     }
 
 }
