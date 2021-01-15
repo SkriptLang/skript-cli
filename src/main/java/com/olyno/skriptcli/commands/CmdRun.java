@@ -33,7 +33,7 @@ public class CmdRun extends Command {
             Parser.init(new String[0], new String[0], new String[0], true);
             Parser.run(scriptPath.toString(), debug, true);
         } else if (Files.isDirectory(scriptPath)) {
-            this.fail("You can't compile a directory!");
+            this.fail("You can't run a directory!");
         } else {
             this.fail("Path not found: " + scriptPath.toString());
         }
